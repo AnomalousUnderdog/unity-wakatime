@@ -25,7 +25,7 @@ namespace WakaTime {
     private static bool _enabled = true;
     private static bool _debug = true;
 
-    private const string URL_PREFIX = "https://wakatime.com/api/v1/";
+    private const string URL_PREFIX = "https://api.wakatime.com/api/v1/";
     private const int HEARTBEAT_COOLDOWN = 120;
 
     private static HeartbeatResponse _lastHeartbeat;
@@ -86,17 +86,22 @@ namespace WakaTime {
       File.WriteAllLines(WAKATIME_PROJECT_FILE, content);
     }
 
+#pragma warning disable 0649
+// "never assigned" warning disabled as below fields are set using reflexion.
+    [Serializable]
     struct Response<T> {
-      public string error;
-      public T data;
+      public string error = null;
+      public T data = default(T);
     }
 
+    [Serializable]
     struct HeartbeatResponse {
-      public string id;
-      public string entity;
-      public string type;
-      public float time;
+      public string id = null;
+      public string entity = null;
+      public string type = null;
+      public float time = 0f;
     }
+#pragma warning restore 0649
 
     struct Heartbeat {
       public string entity;
@@ -127,7 +132,7 @@ namespace WakaTime {
 
       var currentScene = EditorSceneManager.GetActiveScene().path;
       var file = currentScene != string.Empty
-        ? Path.Combine(Application.dataPath, currentScene.Substring("Assets/".Length))
+        ? Application.dataPath + "/" + currentScene.Substring("Assets/".Length)
         : string.Empty;
 
       var heartbeat = new Heartbeat(file, fromSave);
@@ -141,7 +146,6 @@ namespace WakaTime {
 
       var request = UnityWebRequest.Post(URL_PREFIX + "users/current/heartbeats?api_key=" + _apiKey, string.Empty);
       request.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(heartbeatJSON));
-      request.chunkedTransfer = false;
       request.SetRequestHeader("Content-Type", "application/json");
 
       request.SendWebRequest().completed +=
@@ -216,7 +220,7 @@ namespace WakaTime {
           EditorApplication.hierarchyChanged -= OnHierarchyWindowChanged;
         #else
           EditorApplication.hierarchyWindowChanged -= OnHierarchyWindowChanged;
-        #endif  
+        #endif
         EditorSceneManager.sceneSaved -= OnSceneSaved;
         EditorSceneManager.sceneOpened -= OnSceneOpened;
         EditorSceneManager.sceneClosing -= OnSceneClosing;
