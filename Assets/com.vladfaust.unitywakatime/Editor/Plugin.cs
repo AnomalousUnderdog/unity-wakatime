@@ -86,6 +86,8 @@ namespace WakaTime {
       File.WriteAllLines(WAKATIME_PROJECT_FILE, content);
     }
 
+#pragma warning disable 0649
+// "never assigned" warning disabled as below fields are set using reflexion.
     [Serializable]
     struct Response<T> {
       public string error = null;
@@ -99,6 +101,7 @@ namespace WakaTime {
       public string type = null;
       public float time = 0f;
     }
+#pragma warning restore 0649
 
     struct Heartbeat {
       public string entity;
