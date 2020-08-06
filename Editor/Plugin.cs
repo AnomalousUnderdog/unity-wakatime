@@ -90,16 +90,16 @@ namespace WakaTime {
 // "never assigned" warning disabled as below fields are set using reflexion.
     [Serializable]
     struct Response<T> {
-      public string error = null;
-      public T data = default(T);
+      public string error;
+      public T data;
     }
 
     [Serializable]
     struct HeartbeatResponse {
-      public string id = null;
-      public string entity = null;
-      public string type = null;
-      public float time = 0f;
+      public string id;
+      public string entity;
+      public string type;
+      public float time;
     }
 #pragma warning restore 0649
 
