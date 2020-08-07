@@ -25,7 +25,7 @@ The [Unity Package Manager](https://docs.unity3d.com/Packages/com.unity.package-
 1. Modify your project's `Packages/manifest.json` file adding this line:
 
     ```json
-    "com.vladfaust.unitywakatime": "https://github.com/vladfaust/unity-wakatime.git#package"
+    "com.vladfaust.unitywakatime": "https://github.com/AnomalousUnderdog/unity-wakatime.git#package"
     ```
 
     Make sure it's still a valid JSON file. For example:
@@ -34,7 +34,7 @@ The [Unity Package Manager](https://docs.unity3d.com/Packages/com.unity.package-
     {
         "dependencies": {
             "com.unity.ads": "2.0.8",
-            "com.vladfaust.unitywakatime": "https://github.com/vladfaust/unity-wakatime.git#package"
+            "com.vladfaust.unitywakatime": "https://github.com/AnomalousUnderdog/unity-wakatime.git#package"
         }
     }
     ```
@@ -66,7 +66,7 @@ The plugin will automatically send heartbeats to WakaTime after following events
 * DidReloadScripts
 * EditorApplication.playModeStateChanged
 * EditorApplication.contextualPropertyMenu
-* EditorApplication.hierarchyWindowChanged
+* EditorApplication.hierarchyWindowChanged (EditorApplication.hierarchyChanged for Unity 2018.1+)
 * EditorSceneManager.sceneSaved
 * EditorSceneManager.sceneOpened
 * EditorSceneManager.sceneClosing
